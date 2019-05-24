@@ -9,6 +9,7 @@ import com.iyao.lib_common.utils.Utils
  * 组件的Application需置于java/debug文件夹中，不得放于主代码；
  * 组件中获取Context的方法必须为:Utils.getContext()，不允许其他写法；
  *
+ *
  * @author : GuZhC
  * @date : 2019/5/23 17:10
  * @description : BaseApplication
