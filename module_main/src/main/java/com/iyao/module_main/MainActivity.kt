@@ -5,8 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.iyao.module_main.adapter.MainViewPagerAdapter
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.main_activity_main.*
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -17,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.main_activity_main)
         initView()
     }
 
@@ -28,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         }
         mainVp2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         val mainViewPagerAdapter = MainViewPagerAdapter(this, fragments)
-        mainViewPagerAdapter.set
         mainVp2.adapter = mainViewPagerAdapter
         mainVp2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
