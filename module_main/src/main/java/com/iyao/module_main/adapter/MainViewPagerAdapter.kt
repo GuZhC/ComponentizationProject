@@ -1,4 +1,4 @@
-package com.guzhc.module_news.adapter
+package com.iyao.module_main.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

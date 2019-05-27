@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-////configuration ARouter for kotlin
-//apply plugin: 'kotlin-kapt'
-//kapt {
-//    arguments {
-//        arg("AROUTER_MODULE_NAME", project.getName())
-//    }
-//}
+//configuration ARouter for kotlin
+apply plugin: 'kotlin-kapt'
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -30,8 +30,11 @@ android {
 
 dependencies {
     implementation project(':lib_common')
-//    kapt rootProject.ext.routerApt
     if (!rootProject.ext.isMainApplication) {
         implementation project(':module_main')
     }
+    if (!rootProject.ext.isNewsApplication) {
+        implementation project(':module_news')
+    }
+    kapt rootProject.ext.routerApt
 }

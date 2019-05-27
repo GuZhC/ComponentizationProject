@@ -7,6 +7,12 @@
         android:background="@color/white"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
+    <Button
+            android:id="@+id/btTest"
+            android:layout_width="@dimen/size_100dp"
+            android:visibility="gone"
+            android:text="test"
+            android:layout_height="@dimen/size_50dp"/>
     <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/mainVp2"
             android:layout_width="match_parent"

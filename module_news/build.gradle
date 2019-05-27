@@ -46,6 +46,5 @@ android {
 
 dependencies {
     implementation project(':lib_common')
-    implementation rootProject.ext.mainLibs
     kapt rootProject.ext.routerApt
 }
