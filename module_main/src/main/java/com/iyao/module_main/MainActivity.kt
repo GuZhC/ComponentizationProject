@@ -1,15 +1,11 @@
 package com.iyao.module_main
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.viewpager2.widget.ViewPager2
-import kotlinx.android.synthetic.main.main_activity_main.*
-import com.alibaba.android.arouter.launcher.ARouter
-import com.iyao.lib_common.RouterPath
+import androidx.viewpager.widget.ViewPager
 import com.iyao.module_main.adapter.MainViewPagerAdapter
+import kotlinx.android.synthetic.main.main_activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,41 +26,39 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        val fragments = mutableListOf<Fragment>()
-        for (i in 1..4) {
-            // 获取Fragment
-            val fragment = ARouter.getInstance().build(RouterPath.news.NEWS_FRAGMENT)
-                .withInt("pager",i)
-                .navigation() as Fragment
-            fragments.add(fragment)
-        }
-        mainVp2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        val mainViewPagerAdapter = MainViewPagerAdapter(this, fragments)
-        mainVp2.adapter = mainViewPagerAdapter
-        mainVp2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        val mainViewPagerAdapter = MainViewPagerAdapter(supportFragmentManager)
+        mainVp.adapter = mainViewPagerAdapter
+        mainVp.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageSelected(position: Int) {
                 mainRgBottom.check(position)
                 changeBtmTvColor(position)
             }
+
+
         })
 
         mainRgBottom.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.mainRbNews -> {
-                    mainVp2.currentItem = PAGE_NEWS
+                    mainVp.currentItem = PAGE_NEWS
                     changeBtmTvColor(PAGE_NEWS)
                 }
                 R.id.mainRbTv -> {
-                    mainVp2.currentItem = PAGE_TV
+                    mainVp.currentItem = PAGE_TV
                     changeBtmTvColor(PAGE_TV)
                 }
                 R.id.mainRbTvNow -> {
-                    mainVp2.currentItem = PAGE_TVNOW
+                    mainVp.currentItem = PAGE_TVNOW
                     changeBtmTvColor(PAGE_TVNOW)
                 }
                 R.id.mainRbMe -> {
-                    mainVp2.currentItem = PAGE_ME
+                    mainVp.currentItem = PAGE_ME
                     changeBtmTvColor(PAGE_ME)
                 }
             }

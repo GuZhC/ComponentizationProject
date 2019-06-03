@@ -1,6 +1,7 @@
 ext{
     isMainApplication = false  //false:作为Lib组件存在， true:作为application存在
     isNewsApplication = false  //false:作为Lib组件存在， true:作为application存在
+    isDemoApplication = false  //false:作为Lib组件存在， true:作为application存在
 
     android = [
             compileSdkVersion: 28,
@@ -47,6 +48,7 @@ ext{
             //router
              "router"           : "com.alibaba:arouter-api:1.5.0",
             //network
+             "glide"            : 'com.github.bumptech.glide:glide:4.9.0'
 
             //image
 
@@ -59,18 +61,21 @@ ext{
             "viewpager2"        :'androidx.viewpager2:viewpager2:1.0.0-alpha04'
     ]
 
-    routerAptDeps = [
-            "router-compiler": "com.alibaba:arouter-compiler:1.2.2"
+    demoDeps = [
+            "baseAdapter"       :'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
     ]
+
+
 
     annotationProcessorDeps = [
-
+            "router-compiler"   : "com.alibaba:arouter-compiler:1.2.2",
+            "glide"             : 'com.github.bumptech.glide:compiler:4.9.0'
     ]
-    //router:kotlin用kapt Java用annotationProcessor
-    routerApt = routerAptDeps.values()
 
     commonLibs = commonDeps.values()
     mainLibs = mainDeps.values()
+    demoLibs = demoDeps.values()
 
-//    annotationProcessorLibs = annotationProcessorDeps.values()
+    //kotlin用kapt Java用annotationProcessor
+    annotationProcessorLibs = annotationProcessorDeps.values()
 }

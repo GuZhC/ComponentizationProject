@@ -38,5 +38,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
     api rootProject.ext.commonLibs
-    kapt rootProject.ext.routerApt
+    kapt rootProject.ext.annotationProcessorLibs
 }

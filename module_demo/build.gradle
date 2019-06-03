@@ -1,4 +1,8 @@
-apply plugin: 'com.android.application'
+if (rootProject.ext.isDemoApplication) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
@@ -13,12 +17,24 @@ kapt {
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
-        applicationId rootProject.ext.android.applicationId
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    sourceSets {
+        main {
+            if (rootProject.ext.isDemoApplication) {
+                manifest.srcFile 'src/main/module/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                //集成开发模式下排除debug文件夹中的所有Java文件
+                java {
+                    exclude 'debug/**'
+                }
+            }
+        }
     }
     buildTypes {
         release {
@@ -30,14 +46,6 @@ android {
 
 dependencies {
     implementation project(':lib_common')
-    if (!rootProject.ext.isMainApplication) {
-        implementation project(':module_main')
-    }
-    if (!rootProject.ext.isNewsApplication) {
-        implementation project(':module_news')
-    }
-    if (!rootProject.ext.isDemoApplication) {
-        implementation project(':module_demo')
-    }
+    implementation rootProject.ext.demoLibs
     kapt rootProject.ext.annotationProcessorLibs
 }

@@ -1,6 +1,7 @@
 package com.iyao.lib_common.base
 
 import android.app.Application
+import com.alibaba.android.arouter.launcher.ARouter
 import com.iyao.lib_common.utils.Utils
 
 /**
@@ -19,7 +20,7 @@ open class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         Utils.init(this)
-
+        ARouter.init(this)
     }
 
 

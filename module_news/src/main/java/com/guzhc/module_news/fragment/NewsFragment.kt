@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.guzhc.module_news.R
 import com.iyao.lib_common.RouterPath
 import kotlinx.android.synthetic.main.news_fragment_news.*
@@ -27,6 +28,7 @@ class NewsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ARouter.getInstance().inject(this)
         newsTvPager.text = "Pager-$pager"
     }
 }

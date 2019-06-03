@@ -13,4 +13,10 @@ object RouterPath {
             const val NEWS_ACTIVITY = "/news/newsActivity"
         }
     }
+
+    class demo{
+        companion object{
+            const val SHORT_VEDIO_FRAGMET = "/demo/short_vedio_fragmet"
+        }
+    }
 }

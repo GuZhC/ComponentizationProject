@@ -13,8 +13,8 @@
             android:visibility="gone"
             android:text="test"
             android:layout_height="@dimen/size_50dp"/>
-    <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/mainVp2"
+    <androidx.viewpager.widget.ViewPager
+            android:id="@+id/mainVp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_0dp"
             android:layout_weight="1"

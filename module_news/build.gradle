@@ -25,7 +25,7 @@ android {
     }
     sourceSets {
         main {
-            if (rootProject.ext.isMainApplication) {
+            if (rootProject.ext.isNewsApplication) {
                 manifest.srcFile 'src/main/module/AndroidManifest.xml'
             } else {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
@@ -46,5 +46,5 @@ android {
 
 dependencies {
     implementation project(':lib_common')
-    kapt rootProject.ext.routerApt
+    kapt rootProject.ext.annotationProcessorLibs
 }
