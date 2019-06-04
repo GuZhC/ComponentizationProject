@@ -9,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -38,6 +37,9 @@ public class ShortVedioFragmet extends Fragment implements ViewPager.OnPageChang
     public ImageHandler handler = new ImageHandler(new WeakReference<ShortVedioFragmet>(this));
     public ViewPager viewPagerBanner;
     private ShortViewoViewPagerAdapter shortViewoViewPagerAdapter;
+    private LinearLayoutManager mLayoutManager;
+    private int playPosition = 1;
+    private int stopPosition = 1;
 
     @Nullable
     @Override
@@ -57,15 +59,12 @@ public class ShortVedioFragmet extends Fragment implements ViewPager.OnPageChang
 
     private void initDate() {
         mData.clear();
-        for (int i = 0; i < 5; i++) {
+        mData.add("播1放");
+        for (int i = 0; i < 15; i++) {
             mData.add("item" + i);
         }
     }
 
-    @Override
-    public boolean getUserVisibleHint() {
-        return super.getUserVisibleHint();
-    }
 
     @SuppressLint("ClickableViewAccessibility")
     private void initView() {
@@ -91,7 +90,8 @@ public class ShortVedioFragmet extends Fragment implements ViewPager.OnPageChang
         viewPagerBanner.setOffscreenPageLimit(mData.size());
 
         //设置recyclerView
-        recyclerShortVideo.setLayoutManager(new LinearLayoutManager(getContext()));
+        mLayoutManager = new LinearLayoutManager(getContext());
+        recyclerShortVideo.setLayoutManager(mLayoutManager);
         shortVideoRecyclerAdapter = new ShortVideoRecyclerAdapter(mData);
         shortVideoRecyclerAdapter.addHeaderView(bannerView);
         recyclerShortVideo.setAdapter(shortVideoRecyclerAdapter);
@@ -111,26 +111,94 @@ public class ShortVedioFragmet extends Fragment implements ViewPager.OnPageChang
                 Log.e("clickPager","clickPager"+data);
             }
         });
+        recyclerShortVideo.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                //静止的时候
+                if (newState == RecyclerView.SCROLL_STATE_IDLE ){
+                    if (playPosition == 0) {
+                        playPosition =1;
+                    }
+                    if (stopPosition!=playPosition){
+                        mData.set(playPosition-1,"播放");
+                        shortVideoRecyclerAdapter.startPlay(playPosition);
+                        stopPosition = playPosition;
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (mLayoutManager == null) {
+                    return;
+                }
+                //得到显示屏内的第一个list的位置数position
+                int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                View firstView = mLayoutManager.findViewByPosition(firstVisibleItem);
+                //数量小于二
+                if (null == firstView||mLayoutManager.getChildCount() < 2) {
+                    return;
+                }
+                //向上滑动
+                if (dy > 0) {
+                    if (firstView.getHeight() + firstView.getTop() <= firstView.getHeight() / 2) {
+                        playPosition = firstVisibleItem + 1;
+                        if (stopPosition!=-1){
+                            if (playPosition == 1&&stopPosition==1){
+                                return;
+                            }
+                            mData.set(stopPosition-1,"停止");
+                            shortVideoRecyclerAdapter.stopPlay(stopPosition);
+                            stopPosition =-1;
+                        }
+                    }
+//                    else {
+//                        playPosition = firstVisibleItem;
+//                    }
+                }
+                //向下滑动
+                if (dy < 0) {
+                    if (firstView.getHeight() + firstView.getTop() >= firstView.getHeight() / 2) {
+                        playPosition = firstVisibleItem;
+                        if (stopPosition!=-1){
+                            if (playPosition!=0&&stopPosition ==1){
+                                return;
+                            }
+                            mData.set(stopPosition=1,"停止");
+                            shortVideoRecyclerAdapter.stopPlay(stopPosition);
+                            stopPosition =-1;
+                        }
+                    }
+//                    else {
+//                        playPosition = firstVisibleItem + 1;
+//                    }
+                }
+
+            }
+        });
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser) {
-            //相当于OnResume(),可以做相关逻辑
-            //开始轮播效果
-            handler.sendEmptyMessageDelayed(ImageHandler.MSG_UPDATE_IMAGE, ImageHandler.MSG_DELAY);
-        }else {
-            //相当于OnPause()
-            //暂停轮播效果
-            handler.sendEmptyMessage(ImageHandler.MSG_KEEP_SILENT);
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if(isVisibleToUser) {
+//            //相当于OnResume(),可以做相关逻辑
+//            //开始轮播效果
+//            handler.sendEmptyMessageDelayed(ImageHandler.MSG_UPDATE_IMAGE, ImageHandler.MSG_DELAY);
+//        }else {
+//            //相当于OnPause()
+//            //暂停轮播效果
+//            handler.sendEmptyMessage(ImageHandler.MSG_KEEP_SILENT);
+//        }
+//    }
 
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        handler.sendMessage(Message.obtain(handler, ImageHandler.MSG_PAGE_CHANGED, position, 0));
+//        handler.sendMessage(Message.obtain(handler, ImageHandler.MSG_PAGE_CHANGED, position, 0));
     }
 
     @Override
@@ -139,18 +207,18 @@ public class ShortVedioFragmet extends Fragment implements ViewPager.OnPageChang
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        switch (state) {
-            //滑动中
-            case ViewPager.SCROLL_STATE_DRAGGING:
-                handler.sendEmptyMessage(ImageHandler.MSG_KEEP_SILENT);
-                break;
-            //未滑动
-            case ViewPager.SCROLL_STATE_IDLE:
-                handler.sendEmptyMessageDelayed(ImageHandler.MSG_UPDATE_IMAGE, ImageHandler.MSG_DELAY);
-                break;
-            default:
-                break;
-        }
+//        switch (state) {
+//            //滑动中
+//            case ViewPager.SCROLL_STATE_DRAGGING:
+//                handler.sendEmptyMessage(ImageHandler.MSG_KEEP_SILENT);
+//                break;
+//            //未滑动
+//            case ViewPager.SCROLL_STATE_IDLE:
+//                handler.sendEmptyMessageDelayed(ImageHandler.MSG_UPDATE_IMAGE, ImageHandler.MSG_DELAY);
+//                break;
+//            default:
+//                break;
+//        }
     }
 }
 
