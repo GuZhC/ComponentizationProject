@@ -2,72 +2,63 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        xmlns:btmtab="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:background="@color/white"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
-    <Button
-            android:id="@+id/btTest"
-            android:layout_width="@dimen/size_100dp"
-            android:visibility="gone"
-            android:text="test"
-            android:layout_height="@dimen/size_50dp"/>
+
+
     <androidx.viewpager.widget.ViewPager
             android:id="@+id/mainVp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_0dp"
             android:layout_weight="1"
             android:orientation="vertical"/>
-    <RadioGroup
-            android:id="@+id/mainRgBottom"
+
+    <LinearLayout
+            android:id="@+id/mainLlBottom"
             android:layout_width="match_parent"
-            android:background="@color/bg_gray"
+            android:background="@color/gray_f6"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:layout_height="@dimen/size_50dp">
 
-        <RadioButton
+        <com.iyao.module_main.BottomTabBtn
                 android:id="@+id/mainRbNews"
-                android:text="@string/main_btm_news"
+                btmtab:textBtm="@string/main_btm_news"
                 android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
-                android:textSize="@dimen/text_size_16sp"
-                android:textColor="@color/color_map_grid_selected"
+                btmtab:iconChecked="@mipmap/main_tab_news_g"
+                btmtab:iconNoChecked="@mipmap/main_tab_news_b"
                 android:layout_width="@dimen/size_0dp"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"/>
 
-        <RadioButton
+        <com.iyao.module_main.BottomTabBtn
                 android:id="@+id/mainRbTv"
-                android:text="@string/main_btm_tv"
+                btmtab:textBtm="@string/main_btm_tv"
                 android:layout_weight="1"
-                android:button="@null"
-                android:textSize="@dimen/text_size_16sp"
-                android:textColor="@color/common_text"
-                android:gravity="center"
+                btmtab:iconChecked="@mipmap/main_tab_contract_g"
+                btmtab:iconNoChecked="@mipmap/main_tab_contact_b"
                 android:layout_width="@dimen/size_0dp"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"/>
 
-        <RadioButton
+        <com.iyao.module_main.BottomTabBtn
                 android:id="@+id/mainRbTvNow"
-                android:text="@string/main_btm_tvnow"
+                btmtab:textBtm="@string/main_btm_tvnow"
+                btmtab:iconChecked="@mipmap/main_tab_find_g"
+                btmtab:iconNoChecked="@mipmap/main_tab_find_b"
                 android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
-                android:textSize="@dimen/text_size_16sp"
-                android:textColor="@color/common_text"
                 android:layout_width="@dimen/size_0dp"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"/>
 
-        <RadioButton
+        <com.iyao.module_main.BottomTabBtn
                 android:id="@+id/mainRbMe"
-                android:text="@string/main_btm_me"
+                btmtab:textBtm="@string/main_btm_me"
                 android:layout_weight="1"
-                android:button="@null"
-                android:textSize="@dimen/text_size_16sp"
-                android:textColor="@color/common_text"
-                android:gravity="center"
+                btmtab:iconChecked="@mipmap/main_tab_mine_g"
+                btmtab:iconNoChecked="@mipmap/main_tab_mine_b"
                 android:layout_width="@dimen/size_0dp"
-                android:layout_height="match_parent"/>
-    </RadioGroup>
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
 </LinearLayout>

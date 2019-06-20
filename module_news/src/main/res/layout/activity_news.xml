@@ -7,6 +7,7 @@
         tools:context=".activity.NewsActivity">
 
     <TextView
+            android:id="@+id/tvTest"
             android:text="testActivity"
             android:gravity="center"
             android:textSize="@dimen/text_size_22sp"

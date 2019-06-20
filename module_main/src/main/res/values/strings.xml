@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">moduleMain</string>
-    <string name="main_btm_news">新闻</string>
-    <string name="main_btm_tv">视听</string>
-    <string name="main_btm_tvnow">直播</string>
-    <string name="main_btm_me">我的</string>
+    <string name="main_btm_news">消息</string>
+    <string name="main_btm_tv">通讯录</string>
+    <string name="main_btm_tvnow">发现</string>
+    <string name="main_btm_me">我</string>
 </resources>

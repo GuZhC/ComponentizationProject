@@ -19,7 +19,9 @@ class MainViewPagerAdapter(fm: FragmentManager) :
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> ARouter.getInstance().build(RouterPath.demo.SHORT_VEDIO_FRAGMET).navigation() as Fragment
+            0 -> ARouter.getInstance().build(RouterPath.news.NEWS_FRAGMENT)
+                .withInt("pager", 0)
+                .navigation() as Fragment
             1 -> ARouter.getInstance().build(RouterPath.news.NEWS_FRAGMENT)
                 .withInt("pager", 1)
                 .navigation() as Fragment
